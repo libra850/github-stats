@@ -3,7 +3,16 @@
 import { useState } from 'react';
 
 export default function Home() {
-  const [repos, setRepos] = useState([]);
+  interface Repo {
+    id: number;
+    name: string;
+    description: string;
+    stars: number;
+    language: string;
+    url: string;
+  }
+
+  const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [searchInput, setSearchInput] = useState('');
@@ -64,14 +73,10 @@ export default function Home() {
         </button>
       </div>
 
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {error}
-        </div>
-      )}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       <div className="grid gap-4">
-        {repos.map((repo: any) => (
+        {repos.map((repo: Repo) => (
           <div key={repo.id} className="border p-4 rounded shadow">
             <h2 className="font-bold text-lg">{repo.name}</h2>
             <p className="text-gray-600 mt-1">{repo.description}</p>

@@ -24,10 +24,12 @@ export async function GET(request: Request) {
       per_page: 10,
     });
 
-    const repositories = response.data.items.map((repo: any) => ({
+    console.log(response.data.items)
+
+    const repositories = response.data.items.map((repo: { id: number; full_name: string; description: string | null; stargazers_count: number; html_url: string; language: string | null }) => ({
       id: repo.id,
       name: repo.full_name,
-      description: repo.description,
+      description: repo.description || '',
       stars: repo.stargazers_count,
       url: repo.html_url,
       language: repo.language
